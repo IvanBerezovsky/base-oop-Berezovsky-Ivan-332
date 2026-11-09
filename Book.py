@@ -6,7 +6,12 @@ class Book:
         Book._next_isbn += 1
         self._name = name
         self._author = author
-        self.__is_available = is_available
+        self._is_available = is_available
+
+    def __repr__(self) -> str:
+        if self.is_available:
+            return f"Book({self.isbn}, {self.name!r}, {self.author!r}, available)"
+        return f"Book({self.isbn}, {self.name!r}, {self.author!r}, not available)"
     
     @property
     def isbn(self) -> int:
@@ -22,16 +27,4 @@ class Book:
     
     @property
     def is_available(self) -> bool:
-        return self.__is_available
-    
-    def get_book(self) -> bool:
-        if self.is_available:
-            self.__is_available = False
-            return True
-        raise ValueError(f'Книга "{self.name}" уже выдана')
-    
-    def return_book(self) -> bool:
-        if not self.is_available:
-            self.__is_available = True
-            return True
-        raise ValueError(f'Книга "{self.name}" уже возвращена')
+        return self._is_available
